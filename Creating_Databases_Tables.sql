@@ -30,3 +30,12 @@ age int(10)
 );
 
 drop table dogs;
+
+create table pastries
+(
+name varchar(50),
+quantity int
+);
+
+show columns from pastries;
+drop table pastries;
