@@ -39,3 +39,5 @@ quantity int
 
 show columns from pastries;
 drop table pastries;
+
+-- 주석달기
