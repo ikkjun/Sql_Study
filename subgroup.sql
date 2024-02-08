@@ -81,4 +81,12 @@ select * from s_emp, s_dept
 where s_emp.dept_id = s_dept.id
 ;
 
-select * from s_dept;
+-- 직원 중에 '김정미'와 같은 직책(title)을 가지는 사원의 이름과
+-- 직책, 급여, 부서번호를 나타내시오(self-join)
+-- 김정미의 직책? 과장
+-- 그 직책인 사람? 전지영, 신기웅, 이상헌, 최순철 
+select m.name, m.title, m.salary, m.dept_id
+from (select * from s_emp where name = '김정미') w, s_emp m
+where w.title = m.title
+;
+
