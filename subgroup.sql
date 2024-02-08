@@ -29,3 +29,56 @@ select region_id 지역번호, count(name) 부서개수 from s_dept
 group by region_id
 order by region_id
 ;
+
+-- 각 직책별로 급여의 총합을 구하되 직책이 부장인 사람은 제외
+-- 단, 급여 총합이 8,000 이상인 직책만 나타내며, 급여 총합 오름차순 정렬
+-- 사원: 8090, 과장: 11500
+select title 직책, sum(salary) 급여총합
+from s_emp
+where title not like '부장'
+group by title
+having sum(salary) >= 8000
+order by 급여총합
+;
+
+-- 각 부서별(dept_id)로 직책(title)이 사원인 직원들에 대해서만 평균 급여 구하기
+-- 사원 10명
+select dept_id 부서, avg(salary) 평균_급여
+from s_emp
+where title = '사원'
+group by dept_id
+order by dept_id
+;
+
+-- 각 부서(dept_id) 내에서 각 직책(title)별로 몇 명의 인원이 있는지를 나타내시오.
+select dept_id 부서, title 직책, count(title) 직책_별_인원
+from s_emp
+group by dept_id, title
+order by dept_id
+;
+
+-- 각 부서(dept_id) 내에서 몇 명의 직원이 근무하는지를 나타내시오
+-- 101: 1, 102: 2, 103: 1, 104: 1, 105: 1, 
+-- 106: 2, 110: 4, 111: 3, 112: 3, 113: 5, 118: 2
+select dept_id 부서, count(dept_id) 부서_별_인원
+from s_emp
+group by dept_id
+order by dept_id
+;
+
+-- 각 부서(dept_id)별로 급여(salary)의 최소값과 최대값을 나타내시오
+-- 단 최소값과 최대값이 같은 부서는 출력하지 마시오.
+-- 102: 2450, 3500 / 106: 0, 795 / 110: 0, 3000 / 111: 795, 2400 /
+-- 112: 750, 2100 / 113: 800, 2300 / 118: 3200, 5000
+select dept_id, min(salary), max(salary)
+from s_emp
+group by dept_id
+having min(salary) not like max(salary)
+order by dept_id
+;
+
+select * from s_emp, s_dept
+where s_emp.dept_id = s_dept.id
+;
+
+select * from s_dept;
